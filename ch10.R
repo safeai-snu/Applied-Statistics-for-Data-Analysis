@@ -18,14 +18,30 @@ Xsq$expected   # 예측치
 
 # R 예제: 부호 검정
 score <- read.csv("score.csv")
-diff = sign(score$Midterm-score$Final); t=sum(diff==0);
-median=sum(diff>0); median # 중앙값
-n=length(diff)-t; n # 표본크기
+sdiff = sign(score$Midterm-score$Final)
+cbind(score,sdiff)
+t=sum(sdiff==0);
+median=sum(sdiff>0); median # 중앙값
+n=length(sdiff)-t; n # 표본크기
 binom.test(median, n) # Exact binomial test
 
 # R 예제: Wilcox Signed - Rank 검정
 score <- read.csv("score.csv")
+diff=score$Midterm-score$Final
+nzdiff= diff[diff!=0]
+diff.rank=rank(abs(nzdiff))
+n=length(nzdiff);
+rnk=length(adiff)-rank(adiff)+1
+V=(Tplus-n*(n+1)/4)/sqrt(n*(n+1)*(2*n+1)/24)
+
 wilcox.test(score$Midterm, score$Final, paired = TRUE)
+plot(score$Midterm, score$Final,
+     pch = 16,
+     xlab="Midterm",
+     ylab="Final")
+
+abline(0,1, col="blue", lwd=2)
+
 
 # R 예제: Mann - Whitney - Wilcoxon
 logic = mtcars$am == 0
